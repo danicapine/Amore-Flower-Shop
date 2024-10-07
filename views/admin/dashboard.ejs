@@ -54,7 +54,6 @@
                                 <td><%= product.name %></td>
                                 <td><%= product.category %></td>
                                 <td><%= product.details %></td>
-                                <td><%= product.size %></td>
                                 <td><%= product.price %></td>
                                 <td><img src="<%= product.image %>" alt="<%= product.name %>" style="width: 50px;"></td>
                                 <td>
@@ -63,7 +62,6 @@
                                             data-name="<%= product.name %>" 
                                             data-category="<%= product.category %>" 
                                             data-details="<%= product.details %>" 
-                                            data-size="<%= product.size %>" 
                                             data-price="<%= product.price %>" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#editProductModal">Edit</button>
@@ -140,22 +138,15 @@
                         </div>
                         <div class="mb-3">
                             <label for="edit-category" class="form-label">Category</label>
-                            <select class="form-select" id="edit-category" name="category" required>
-                                <option value="T-Shirts">T-Shirts</option>
-                                <option value="Shorts">Shorts</option>
+                            <select class="form-select" id="category" name="category" required>
+                                <option value="T-Shirts">Rose</option>
+                                <option value="Shorts">Tulip</option>
+                                <option value="Shorts">Carnation</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="edit-details" class="form-label">Details</label>
                             <textarea class="form-control" id="edit-details" name="details" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edit-size" class="form-label">Size</label>
-                            <select class="form-select" id="edit-size" name="size" required>
-                                <option value="Small">Small</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Large">Large</option>
-                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="edit-price" class="form-label">Price</label>
@@ -185,14 +176,12 @@
                     const name = this.dataset.name;
                     const category = this.dataset.category;
                     const details = this.dataset.details;
-                    const size = this.dataset.size;
                     const price = this.dataset.price;
 
                     document.getElementById('edit-id').value = id;
                     document.getElementById('edit-name').value = name;
                     document.getElementById('edit-category').value = category;
                     document.getElementById('edit-details').value = details;
-                    document.getElementById('edit-size').value = size;
                     document.getElementById('edit-price').value = price;
                 });
             });

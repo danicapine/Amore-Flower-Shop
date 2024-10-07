@@ -45,7 +45,7 @@ router.post('/admin/add', upload.single('image'), (req, res) => {
     const imagePath = '/img/' + req.file.filename; // Path to the uploaded image
 
     db.query('INSERT INTO products (name, category, details, size, price, image) VALUES (?, ?, ?, ?, ?, ?)', 
-             [name, category, details, size, price, imagePath], (err, result) => {
+             [name, category, details, price, imagePath], (err, result) => {
         if (err) {
             console.error('Database error while adding product:', err);
             return res.status(500).send('Error adding product');
@@ -68,17 +68,17 @@ router.post('/admin/delete/:id', (req, res) => {
 
 // Route to update a product
 router.post('/admin/edit', upload.single('image'), (req, res) => {
-    const { id, name, category, details, size, price } = req.body;
+    const { id, name, category, details, price } = req.body;
     const imagePath = req.file ? '/img/' + req.file.filename : null; // Handle the uploaded image file
 
     // Prepare the query to update product details
     const query = `
         UPDATE products 
-        SET name = ?, category = ?, details = ?, size = ?, price = ?${imagePath ? ', image = ?' : ''}
+        SET name = ?, category = ?, details = ?, price = ?${imagePath ? ', image = ?' : ''}
         WHERE id = ?
     `;
     
-    const params = [name, category, details, size, price];
+    const params = [name, category, details, price];
     if (imagePath) params.push(imagePath); // Add imagePath if it exists
     params.push(id); // Add product ID to the parameters
 

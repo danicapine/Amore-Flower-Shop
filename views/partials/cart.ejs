@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% if (cartItems && cartItems.length > 0) { %> <!-- Check if cartItems exists -->
+      <% if (cartItems && cartItems.length > 0) { %>
         <% cartItems.forEach(item => { %>
           <tr>
             <td><%= item.name %></td>
@@ -42,85 +42,103 @@
   </table>
   <div class="text-right">
     <h4>Total: <span id="cart-total"><%= cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2) %></span> PHP</h4>
-    <button id="checkout-button" class="btn btn-primary">Proceed to Checkout</button>
+    <button id="checkout-button" class="btn btn-black">Proceed to Checkout</button>
   </div>
 </main>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+<style>
+  .btn-black {
+    background-color: black;
+    color: white;
+  }
+</style>
+
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     // Checkout button event listener
     document.getElementById('checkout-button').addEventListener('click', function () {
-      // Calculate total amount and total items
-      const cartItems = Array.from(document.querySelectorAll('tbody tr'));
-      const totalAmount = parseFloat(document.getElementById('cart-total').textContent);
-      const totalItems = cartItems.reduce((sum, row) => {
-        const quantity = parseInt(row.querySelector('.quantity-value').textContent);
-        return sum + quantity;
-      }, 0);
+      try {
+        const cartItems = Array.from(document.querySelectorAll('tbody tr'));
+        const totalAmount = parseFloat(document.getElementById('cart-total').textContent);
+        const totalItems = cartItems.reduce((sum, row) => {
+          const quantity = parseInt(row.querySelector('.quantity-value').textContent);
+          return sum + quantity;
+        }, 0);
 
-      // Store total amount and total items in local storage
-      localStorage.setItem('totalAmount', totalAmount.toFixed(2));
-      localStorage.setItem('totalItems', totalItems.toString());
-
-      // Redirect to checkout page
-      window.location.href = '/checkout';
+        localStorage.setItem('totalAmount', totalAmount.toFixed(2));
+        localStorage.setItem('totalItems', totalItems.toString());
+        window.location.href = '/checkout';
+      } catch (error) {
+        console.error('Checkout process error:', error);
+      }
     });
 
-    // Function to update total price in the cart
     function updateTotal() {
-      let total = 0;
-      document.querySelectorAll('tbody tr').forEach(row => {
-        const quantity = parseInt(row.querySelector('.quantity-value').textContent);
-        const price = parseFloat(row.querySelector('td:nth-child(3)').textContent);
-        const itemTotal = quantity * price;
-        row.querySelector('td:nth-child(4)').textContent = itemTotal.toFixed(2) + ' PHP';
-        total += itemTotal;
-      });
-      document.getElementById('cart-total').textContent = total.toFixed(2);
+      try {
+        let total = 0;
+        document.querySelectorAll('tbody tr').forEach(row => {
+          const quantity = parseInt(row.querySelector('.quantity-value').textContent);
+          const price = parseFloat(row.querySelector('td:nth-child(3)').textContent);
+          const itemTotal = quantity * price;
+          row.querySelector('td:nth-child(4)').textContent = itemTotal.toFixed(2) + ' PHP';
+          total += itemTotal;
+        });
+        document.getElementById('cart-total').textContent = total.toFixed(2);
+      } catch (error) {
+        console.error('Error updating total:', error);
+      }
     }
 
-    // Increase quantity button event listener
     document.querySelectorAll('.increase-quantity').forEach(button => {
       button.addEventListener('click', function () {
-        const itemId = this.getAttribute('data-id');
-        const quantityDisplay = document.getElementById(`quantity-${itemId}`);
-        let currentQuantity = parseInt(quantityDisplay.textContent);
-        currentQuantity++;
-        quantityDisplay.textContent = currentQuantity;
-
-        updateCart(itemId, currentQuantity);
-        updateTotal();
-      });
-    });
-
-    // Decrease quantity button event listener
-    document.querySelectorAll('.decrease-quantity').forEach(button => {
-      button.addEventListener('click', function () {
-        const itemId = this.getAttribute('data-id');
-        const quantityDisplay = document.getElementById(`quantity-${itemId}`);
-        let currentQuantity = parseInt(quantityDisplay.textContent);
-        
-        if (currentQuantity > 1) {
-          currentQuantity--;
+        try {
+          const itemId = this.getAttribute('data-id');
+          const quantityDisplay = document.getElementById(`quantity-${itemId}`);
+          let currentQuantity = parseInt(quantityDisplay.textContent);
+          currentQuantity++;
           quantityDisplay.textContent = currentQuantity;
 
           updateCart(itemId, currentQuantity);
           updateTotal();
+        } catch (error) {
+          console.error('Error increasing quantity:', error);
         }
       });
     });
 
-    // Remove item button event listener
-    document.querySelectorAll('.btn-danger').forEach(button => {
+    document.querySelectorAll('.decrease-quantity').forEach(button => {
       button.addEventListener('click', function () {
-        const cartId = this.getAttribute('data-id');
-        removeFromCart(cartId);
+        try {
+          const itemId = this.getAttribute('data-id');
+          const quantityDisplay = document.getElementById(`quantity-${itemId}`);
+          let currentQuantity = parseInt(quantityDisplay.textContent);
+          
+          if (currentQuantity > 1) {
+            currentQuantity--;
+            quantityDisplay.textContent = currentQuantity;
+
+            updateCart(itemId, currentQuantity);
+            updateTotal();
+          }
+        } catch (error) {
+          console.error('Error decreasing quantity:', error);
+        }
       });
     });
 
-    // Function to update cart item quantity
+    document.querySelectorAll('.btn-danger').forEach(button => {
+      button.addEventListener('click', function () {
+        try {
+          const cartId = this.getAttribute('data-id');
+          removeFromCart(cartId);
+        } catch (error) {
+          console.error('Error removing item:', error);
+        }
+      });
+    });
+
     function updateCart(cartId, quantity) {
       fetch('/cart/update', {
         method: 'POST',
@@ -139,24 +157,22 @@
         console.log('Success:', data);
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Error updating cart:', error);
       });
     }
 
-    // Function to remove item from cart
     function removeFromCart(cartId) {
       fetch(`/cart/remove/${cartId}`, {
         method: 'POST',
       })
       .then(response => {
-        if (response.ok) {
-          location.reload();
-        } else {
-          console.error('Failed to remove item from cart.');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        location.reload();
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Error removing item from cart:', error);
       });
     }
   });
