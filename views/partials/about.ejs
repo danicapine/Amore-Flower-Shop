@@ -4,20 +4,22 @@
    <div class="row">
 
       <div class="box">
-         <img src="img/gkdl.png" alt="">
-         <h3>why choose us?</h3>
-         <p>At Flower Shop, we exceptional quality and fresh, handpicked flowers that make every occasion special. Our personalized service ensures that each arrangement
-             is tailored to your unique needs and preferences. We offer timely delivery, ensuring your flowers arrive fresh and beautiful. With a passion for floral artistry,
-              we guarantee an unforgettable experience that brings joy to every recipient.
-
+         <img src="img/.png" alt="">
+         <h3>What Makes Us Special?</h3>
+         <p>Amore Flower Shop, we don’t just sell flowers – we create memorable experiences. 
+            Every bouquet is designed with passion and a personal touch, crafted to celebrate life’s most beautiful moments.
+             Our dedication to quality means we source only the freshest blooms, ensuring each arrangement bursts with color and life. Whether you’re celebrating love, friendship, or simply the beauty of nature, Amore Flower Shop brings elegance and warmth to every occasion. 
+             Let us help you express what words cannot.
          </p>
       </div>
 
       <div class="box">
          <img src="img/quality.png" alt="">
-         <h3>what we provide?</h3>
-         <p>We provide fresh, vibrant flowers and beautifully crafted arrangements for all occasions. Our florists customize each design to suit your style and preferences. 
-            We offer a range of options, from bouquets to gift sets, perfect for celebrations or everyday moments. With reliable delivery, your flowers arrive fresh and on time.</p>
+         <h3>What Do We Offer?</h3>
+         <p>Amore Flower Shop, we offer more than just flowers—we provide a touch of elegance for every occasion. 
+            Our talented florists create custom floral designs that reflect your unique style and emotions, whether it’s for weddings, birthdays, or simply to brighten someone’s day. 
+            From exquisite bouquets to thoughtfully curated floral gift sets, we ensure that each piece is crafted with care. 
+            With prompt and reliable delivery, your flowers arrive fresh and beautifully arranged, ready to make an impact.</p>
       </div>
 
    </div>
@@ -26,15 +28,12 @@
 
 <section class="reviews">
 
-   <h1 class="title">Clients Reviews</h1>
+   <h1 class="title">Customer Feedback</h1>
 
    <div class="box-container">
 
       <div class="box">
-         <p>"I absolutely love GKDL Clothing! Their pieces are not only stylish but 
-            also incredibly comfortable. I've received so many compliments on my outfits from
-             there. Plus, I appreciate their commitment to sustainability and ethical practices. It's great to know that I'm supporting a brand that cares about the planet and its people.
-            "</p>
+         <p>"Amore Shop Flowers exceeded my expectations! The bouquet I ordered was even more beautiful in person. The flowers were fresh and smelled amazing. I'm definitely coming back for all my future floral needs!"</p>
          <div class="stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -42,13 +41,15 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
          </div>
-         <h3>Mark Bahia</h3>
+         <div class="feedback">
+            <button class="like" onclick="handleLike(this)"><i class="fas fa-thumbs-up"></i> Like</button>
+            <button class="dislike" onclick="handleDislike(this)"><i class="fas fa-thumbs-down"></i> Dislike</button>
+         </div>
+         <span class="rating"><strong>Mark Bahia</strong></span>
       </div>
 
       <div class="box">
-         <p>"I was initially hesitant to shop online, but GKDL Clothing made it a seamless experience. 
-            Their website is easy to navigate, and the product descriptions are detailed. I ordered a few 
-            items and was blown away by the quality. The clothes fit perfectly, and the colors were true to the images. I'll definitely be shopping here again!"</p>
+         <p>"I ordered flowers for my mom's birthday, and she loved them! The arrangement was beautifully crafted and arrived on time. The delivery service was also very professional. Highly recommend Amore Shop Flowers!"</p>
          <div class="stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -56,13 +57,15 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
          </div>
-         <h3>Trisha Vidal</h3>
+         <div class="feedback">
+            <button class="like" onclick="handleLike(this)"><i class="fas fa-thumbs-up"></i> Like</button>
+            <button class="dislike" onclick="handleDislike(this)"><i class="fas fa-thumbs-down"></i> Dislike</button>
+         </div>
+         <span class="rating"><strong>Trisha Vidal</strong></span>
       </div>
 
       <div class="box">
-         <p>"GKDL Clothing has become my go-to for trendy and sustainable fashion. 
-            I love the variety of styles and the fact that they cater to different body types. 
-            The customer service is also top-notch. They were very helpful in assisting me with sizing and returns. I highly recommend GKDL Clothing to anyone looking for stylish and ethically sourced apparel."</p>
+         <p>"Amore Shop Flowers has become my go-to for all occasions. The variety of flowers they offer is fantastic, and they always have something special. Their customer service is also top-notch—I had a small issue with my order, and they resolved it right away!"</p>
          <div class="stars">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
@@ -70,9 +73,70 @@
             <i class="fas fa-star"></i>
             <i class="fas fa-star-half-alt"></i>
          </div>
-         <h3>Jerum Martinez</h3>
+         <div class="feedback">
+            <button class="like" onclick="handleLike(this)"><i class="fas fa-thumbs-up"></i> Like</button>
+            <button class="dislike" onclick="handleDislike(this)"><i class="fas fa-thumbs-down"></i> Dislike</button>
+         </div>
+         <span class="rating"><strong>Jerum Martinez</strong></span>
       </div>
 
    </div>
 
 </section>
+
+<style>
+   .box {
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-bottom: 20px;
+   }
+   .stars {
+      color: #ffcc00;
+      margin-bottom: 10px;
+   }
+   .feedback {
+      margin-bottom: 10px;
+   }
+   .feedback button {
+      margin-right: 10px;
+      padding: 5px 10px;
+      border: none;
+      background-color: #f1f1f1;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+   }
+   .feedback button.active {
+      background-color: #ddd;
+   }
+   .rating {
+      font-size: 1.1rem;
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+   }
+</style>
+
+<script>
+   function handleLike(button) {
+      if (!button.classList.contains('active')) {
+         button.classList.add('active');
+         const dislikeButton = button.nextElementSibling;
+         dislikeButton.classList.remove('active');
+         button.innerHTML = '<i class="fas fa-thumbs-up"></i> Liked';
+         dislikeButton.innerHTML = '<i class="fas fa-thumbs-down"></i> Dislike';
+      }
+   }
+
+   function handleDislike(button) {
+      if (!button.classList.contains('active')) {
+         button.classList.add('active');
+         const likeButton = button.previousElementSibling;
+         likeButton.classList.remove('active');
+         button.innerHTML = '<i class="fas fa-thumbs-down"></i> Disliked';
+         likeButton.innerHTML = '<i class="fas fa-thumbs-up"></i> Like';
+      }
+   }
+</script>
+
+
